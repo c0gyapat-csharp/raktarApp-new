@@ -11,7 +11,7 @@ namespace RaktarApp.Validators
 {
     internal class WarehouseValidator
     {
-        public static void Validate(Warehouse warehouse)
+        public static void Validate(WarehouseDto warehouse)
         {
             if (warehouse == null)
                 throw new ValidationException(ErrorMessages.ObjectNull);
@@ -21,8 +21,12 @@ namespace RaktarApp.Validators
 
         public static void Validate(string name, string country, string region, int postCode, string city, string address)
         {
-            NameValidator.ValidateName(name);
-
+            Validators.ValidateName(name);
+            Validators.ValidateCountry(country);
+            Validators.ValidateRegion(region);
+            Validators.ValidatePostCode(postCode);
+            Validators.ValidateCity(city);
+            Validators.ValidateAddress(address);
         }
     }
 }

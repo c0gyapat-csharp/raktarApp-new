@@ -59,5 +59,11 @@ namespace RaktarApp.Repos
             }
             _warehouses.Add(warehouse);
         }
+
+
+        public void AddDtoWarehouse(Warehouse warehouse)
+        {
+            _warehouses.Add(warehouse);
+        }
     }
 }

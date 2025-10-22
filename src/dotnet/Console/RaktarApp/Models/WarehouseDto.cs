@@ -6,42 +6,34 @@ using System.Threading.Tasks;
 
 namespace RaktarApp.Models
 {
-    internal class WarehouseCsv
+    internal class WarehouseDto: Warehouse
     {
-        private readonly string _id;
-
+        private readonly int _id;
         private readonly string _name;
-
         private readonly string _country;
-
         private readonly string _region;
-
-        private readonly string _postCode;
-
+        private readonly int _postCode;
         private readonly string _city;
-
         private readonly string _address;
 
-        public string Id => _id;
+        public int Id => _id;
         public string Name => _name;
         public string Country => _country;
         public string Region => _region;
-        public string PostCode => _postCode;
+        public int PostCode => _postCode;
         public string City => _city;
         public string Address => _address;
 
-
-
-        public WarehouseCsv(string id, string name, string country, string region, string postCode, string city, string address)
+        public WarehouseDto() { }
+        public WarehouseDto(int id, string name, string country, string region, int postCode, string city, string address)
         {
             _id = id;
             _name = name;
-            _address = address;
-            _city = city;
-            _postCode = postCode;
-            _region = region;
             _country = country;
+            _region = region;
+            _postCode = postCode;
+            _city = city;
+            _address = address;
         }
-
     }
 }

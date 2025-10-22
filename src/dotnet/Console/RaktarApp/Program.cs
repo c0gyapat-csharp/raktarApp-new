@@ -2,24 +2,42 @@
 using RaktarApp.Models;
 using RaktarApp.Repos;
 
-Console.WriteLine("File beolvasása:");
-Console.WriteLine("---------------");
-
 Console.Write("Kérem a fájl elérésit útját: ");
 
 string filePath = Console.ReadLine() ?? string.Empty;
 
 ApplicationHelpers appHelpers = new ApplicationHelpers();
+WarehouseCsvRepo csvRepo = new WarehouseCsvRepo();
+WarehouseDtoRepo dtoRepo = new WarehouseDtoRepo();
+WarehouseRepo warehouseRepo = new WarehouseRepo();
 
 if (!appHelpers.FileExists(filePath))
 {
     return;
 }
 
-WarehouseCsvRepo repo = new WarehouseCsvRepo();
+csvRepo.CsvReader(filePath);
 
-repo.CsvReader(filePath);
+Console.WriteLine(csvRepo.GetSchemaErrorReport());
 
-Console.WriteLine(repo.GetSchemaErrorReport());
+Console.WriteLine("Sikeresen beolvasott rekordok száma: " + csvRepo.Warehouses.Count);
 
-Console.WriteLine("Sikeresen beolvasott rekordok száma: " + repo.Warehouses.Count);
+csvRepo.Warehouses.ForEach(warehouseCsv =>
+{
+    try
+    {
+        dtoRepo.CsvToDto(warehouseCsv);
+    }
+    catch (ArgumentException ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+});
+
+
+dtoRepo.Warehouses.ForEach(warehouseDto =>
+{
+    warehouseRepo.AddDtoWarehouse(warehouseDto);
+});
+
+Console.WriteLine("Sikeresen validált rekordok száma: " + dtoRepo.Warehouses.Count);
