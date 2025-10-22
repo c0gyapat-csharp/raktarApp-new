@@ -25,6 +25,24 @@ namespace RaktarApp.Repos
 
         public List<WarehouseCsv> Warehouses => _warehouses;
 
+
+        public void CsvReader(string filePath)
+        {
+            int lineNumber = 1;
+            try
+            {
+                foreach (var line in File.ReadAllLines(filePath).Skip(1))
+                {
+                    lineNumber++;
+                    FromLine(line, lineNumber);
+                }
+            }
+            catch (Exception ex)
+            {
+                _schemaErrors.Add(new SchemaError("Hiba a fájl beolvasása során: " + ex.Message, lineNumber));
+            }
+        }
+
         public void FromLine(string line, int lineNumber)
         {
             var parts = line.Split(';').ToArray();

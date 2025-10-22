@@ -13,22 +13,10 @@ if (!File.Exists(filePath))
     return;
 }
 
-int lineNumber = 1;
 
 WarehouseCsvRepo repo = new WarehouseCsvRepo();
 
-try
-{
-    foreach (var line in File.ReadAllLines(filePath).Skip(1))
-    {
-        lineNumber++;
-        repo.FromLine(line, lineNumber);
-    }
-} catch (Exception ex)
-{
-    Console.WriteLine("Hiba a fájl beolvasása közben: " + ex.Message);
-    return;
-}
+repo.CsvReader(filePath);
 
 Console.WriteLine(repo.GetSchemaErrorReport());
 
