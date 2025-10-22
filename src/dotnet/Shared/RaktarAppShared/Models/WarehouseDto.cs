@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RaktarAppShared.Models
 {
-    public class WarehouseDto
+    public class Warehouse
     {
         private readonly int _id;
         private readonly string _name;
@@ -24,8 +24,8 @@ namespace RaktarAppShared.Models
 		public string City { get; set; } = null!;
 		public string Address { get; set; } = null!;
 
-        public WarehouseDto() { }
-        public WarehouseDto(int id, string name, string country, string region, int postCode, string city, string address)
+        public Warehouse() { }
+        public Warehouse(int id, string name, string country, string region, int postCode, string city, string address)
         {
             _id = id;
             _name = name;
