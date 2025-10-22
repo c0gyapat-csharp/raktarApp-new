@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RaktarAppBackend.Context;
 
 namespace RaktarAppBackend.Controllers
 {
@@ -6,6 +7,9 @@ namespace RaktarAppBackend.Controllers
     [Route("[controller]")]
     public class WarehouseController
     {
+
+        AppSqliteDbContext _dbContext = new AppSqliteDbContext();
+
         [HttpGet]
         public IActionResult GetItems()
         {
