@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RaktarAppBackend.Context;
 
+
 namespace RaktarAppBackend.Controllers
 {
     [ApiController]
@@ -14,7 +15,8 @@ namespace RaktarAppBackend.Controllers
         [HttpGet]
         public IActionResult GetItems()
         {
-            var items = _dbContext.Database.SqlQueryRaw<string>("SELECT * FROM Warehouses").ToList();
+            var items = _dbContext.Warehouses.ToList();
+
             return new OkObjectResult(new { items });
         }
 

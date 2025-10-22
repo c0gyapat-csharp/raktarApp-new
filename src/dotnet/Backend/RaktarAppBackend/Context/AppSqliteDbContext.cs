@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using RaktarAppShared.Models;
 namespace RaktarAppBackend.Context
 {
     public class AppSqliteDbContext : DbContext
@@ -18,5 +18,7 @@ namespace RaktarAppBackend.Context
             : base(options)
         {
         }
-    }
+
+        public DbSet<Warehouse> Warehouses { get; set; }
+        }
 }
