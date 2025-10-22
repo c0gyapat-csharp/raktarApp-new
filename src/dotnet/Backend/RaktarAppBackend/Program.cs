@@ -23,7 +23,7 @@ using (var scope = app.Services.CreateAsyncScope())
     dbContext.Database.EnsureCreated();
 
     dbContext.Database.ExecuteSqlRaw(@"
-       CREATE TABLE IF NOT EXISTS Addresses (
+       CREATE TABLE IF NOT EXISTS Warehouses (
             Id INTEGER PRIMARY KEY AUTOINCREMENT,
             Name TEXT NOT NULL,
             Country TEXT NOT NULL,
@@ -32,6 +32,9 @@ using (var scope = app.Services.CreateAsyncScope())
             City TEXT NOT NULL,
             Address TEXT NOT NULL
         );
+
+        INSERT INTO Warehouses (Name, Country, Region, PostCode, City, Address)
+        VALUES ('Main Warehouse', 'USA', 'California', 90001, 'Los Angeles', '123 Main St')
     ");
 }
 

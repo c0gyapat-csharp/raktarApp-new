@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RaktarAppBackend.Context;
 
 namespace RaktarAppBackend.Controllers
@@ -13,13 +14,16 @@ namespace RaktarAppBackend.Controllers
         [HttpGet]
         public IActionResult GetItems()
         {
-            return new OkObjectResult(new[] { "Item1", "Item2", "Item3" });
+            var items = _dbContext.Database.SqlQueryRaw<string>("SELECT * FROM Warehouses").ToList();
+            return new OkObjectResult(new { items });
         }
 
         [HttpGet("count")]
         public IActionResult GetItemCount()
         {
-            return new OkObjectResult(new { count = 3 });
+            var count = _dbContext.Database.SqlQueryRaw<string>("SELECT * FROM Warehouses").Count();
+
+            return new OkObjectResult(new { count });
         }
 
         [HttpPost]

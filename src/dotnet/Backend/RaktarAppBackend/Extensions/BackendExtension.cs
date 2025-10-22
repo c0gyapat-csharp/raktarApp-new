@@ -32,7 +32,7 @@ namespace RaktarAppBackend.Extensions
         private static void ConfigureSqliteDb(IServiceCollection services)
         {
             // A fájl neve és elérési útja szabadon módosítható.
-            var dbPath = Path.Combine(Environment.CurrentDirectory, "MyApp.db");
+            var dbPath = Path.Combine(Environment.CurrentDirectory, "RaktarApp.db");
             services.AddDbContext<AppSqliteDbContext>(options =>
                 options.UseSqlite($"Data Source={dbPath}"));
         }
