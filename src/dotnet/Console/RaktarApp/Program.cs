@@ -1,4 +1,5 @@
 ﻿using RaktarApp.Models;
+using RaktarApp.Repos;
 
 Console.WriteLine("File beolvasása:");
 Console.WriteLine("---------------");
@@ -12,43 +13,32 @@ if (!File.Exists(filePath))
     return;
 }
 
-List<SchemaError> errors = new List<SchemaError>();
-List<WarehouseCsv> validCsv = new List<WarehouseCsv>();
+int lineNumber = 1;
 
-int lineNumber = 0;
+WarehouseCsvRepo repo = new WarehouseCsvRepo();
 
-foreach (var line in File.ReadAllLines(filePath).Skip(1))
+try
 {
-    lineNumber++;
-    var parts = line.Split(';');
-    if (parts.Length != 7)
+    foreach (var line in File.ReadAllLines(filePath).Skip(1))
     {
-        errors.Add(new SchemaError("Oszlopok száma hibás", lineNumber));
-        continue;
+        lineNumber++;
+        repo.FromLine(line, lineNumber);
     }
-    if (!int.TryParse(parts[0], out int id))
-    {
-        errors.Add(new SchemaError($"Nem szám: '{parts[2]}' az id oszlopban", lineNumber));
-    continue;
-    }
-
-    if (!int.TryParse(parts[4], out int postCode))
-    {
-        errors.Add(new SchemaError($"Nem szám: '{parts[2]}' az postCode oszlopban", lineNumber));
-    continue;
-    }
-
-    if (errors.Count > 0) return;
-    
-    validCsv.Add(new WarehouseCsv(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]));
+} catch (Exception ex)
+{
+    Console.WriteLine("Hiba a fájl beolvasása közben: " + ex.Message);
+    return;
 }
 
+SchemaError[] errors = repo.SchemaErrors;
 
-if(errors.Count != 0)
+if (errors.Length != 0)
 {
-    Console.WriteLine("Hibák (" + errors.Count + ")" );
+    Console.WriteLine("Hibák (" + errors.Length + ")" );
     foreach (SchemaError error in errors)
     {
         Console.WriteLine(error.LineNumber + ". sor: " + error.Message);
     }
 }
+
+Console.WriteLine("Sikeres beolvasás, rekordok száma: " + repo.Warehouses.Count);
