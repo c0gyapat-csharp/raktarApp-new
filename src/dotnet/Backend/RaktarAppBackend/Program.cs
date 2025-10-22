@@ -21,6 +21,18 @@ using (var scope = app.Services.CreateAsyncScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppSqliteDbContext>();
     dbContext.Database.EnsureCreated();
+
+    dbContext.Database.ExecuteSqlRaw(@"
+       CREATE TABLE IF NOT EXISTS Addresses (
+            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Name TEXT NOT NULL,
+            Country TEXT NOT NULL,
+            Region TEXT NOT NULL,
+            PostCode INTEGER NOT NULL,
+            City TEXT NOT NULL,
+            Address TEXT NOT NULL
+        );
+    ");
 }
 
 // Configure the HTTP request pipeline.
