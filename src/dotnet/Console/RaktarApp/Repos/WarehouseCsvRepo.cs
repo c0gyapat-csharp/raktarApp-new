@@ -5,14 +5,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RaktarApp.Repos
 {
     internal class WarehouseCsvRepo
     {
 
-        List<WarehouseCsv> _warehouses = new List<WarehouseCsv>();
-        List<SchemaError> _schemaErrors = new List<SchemaError>();
+        private List<WarehouseCsv> _warehouses = new List<WarehouseCsv>();
+        private List<SchemaError> _schemaErrors = new List<SchemaError>();
 
 
         public WarehouseCsvRepo() { }
@@ -23,8 +24,6 @@ namespace RaktarApp.Repos
         }
 
         public List<WarehouseCsv> Warehouses => _warehouses;
-        public SchemaError[] SchemaErrors => _schemaErrors.ToArray();
-
 
         public void FromLine(string line, int lineNumber)
         {
@@ -99,6 +98,21 @@ namespace RaktarApp.Repos
         {
             
             _warehouses.Add(new WarehouseCsv(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]));
+        }
+
+        public string GetSchemaErrorReport()
+        {
+            string errorString = "";
+
+            if (_schemaErrors.Count != 0)
+            {
+                Console.WriteLine("Hibák (" + _schemaErrors.Count + ")");
+                foreach (SchemaError error in _schemaErrors)
+                {
+                    errorString += "\n" + error.LineNumber + ". sor: " + error.Message;
+                }
+            }
+            return errorString;
         }
     }
 }

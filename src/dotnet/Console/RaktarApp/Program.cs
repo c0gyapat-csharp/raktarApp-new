@@ -30,15 +30,6 @@ try
     return;
 }
 
-SchemaError[] errors = repo.SchemaErrors;
+Console.WriteLine(repo.GetSchemaErrorReport());
 
-if (errors.Length != 0)
-{
-    Console.WriteLine("Hibák (" + errors.Length + ")" );
-    foreach (SchemaError error in errors)
-    {
-        Console.WriteLine(error.LineNumber + ". sor: " + error.Message);
-    }
-}
-
-Console.WriteLine("Sikeres beolvasás, rekordok száma: " + repo.Warehouses.Count);
+Console.WriteLine("Sikeresen beolvasott rekordok száma: " + repo.Warehouses.Count);
