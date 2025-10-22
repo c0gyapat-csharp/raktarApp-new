@@ -1,18 +1,20 @@
-﻿using RaktarApp.Models;
+﻿using RaktarApp.Common;
+using RaktarApp.Models;
 using RaktarApp.Repos;
 
 Console.WriteLine("File beolvasása:");
 Console.WriteLine("---------------");
 
 Console.Write("Kérem a fájl elérésit útját: ");
+
 string filePath = Console.ReadLine() ?? string.Empty;
 
-if (!File.Exists(filePath))
+ApplicationHelpers appHelpers = new ApplicationHelpers();
+
+if (!appHelpers.FileExists(filePath))
 {
-    Console.WriteLine("A megadott fájl nem létezik.");
     return;
 }
-
 
 WarehouseCsvRepo repo = new WarehouseCsvRepo();
 
