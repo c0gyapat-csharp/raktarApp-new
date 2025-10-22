@@ -12,6 +12,12 @@ namespace RaktarAppBackend.Controllers
             return new OkObjectResult(new[] { "Item1", "Item2", "Item3" });
         }
 
+        [HttpGet("count")]
+        public IActionResult GetItemCount()
+        {
+            return new OkObjectResult(new { count = 3 });
+        }
+
         [HttpPost]
         public IActionResult AddItem()
         {
