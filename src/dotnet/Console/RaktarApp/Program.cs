@@ -4,7 +4,9 @@ using RaktarApp.Repos;
 
 Console.Write("Kérem a fájl elérésit útját: ");
 
-string filePath = Console.ReadLine() ?? string.Empty;
+string baseDirectory = AppContext.BaseDirectory;
+string fileName = Console.ReadLine() ?? string.Empty;
+string filePath = Path.Combine(baseDirectory, "..\\..\\..\\TestData", fileName);
 
 ApplicationHelpers appHelpers = new ApplicationHelpers();
 WarehouseCsvRepo csvRepo = new WarehouseCsvRepo();

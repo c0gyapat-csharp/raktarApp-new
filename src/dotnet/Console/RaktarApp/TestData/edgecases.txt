@@ -1,0 +1,15 @@
+Id;Name;Country;Region;PostCode;City;Address
+1;Central Warehouse;Hungary;Central;1051;Budapest;Main St 1
+2;West Depot;Germany;Bavaria;80331;Munich;Königstrasse 5
+3;East Hub;Poland;Mazovia;10000;Warsaw;"Eastern Industrial Park; Bldg A"
+4;MissingAddress;France;Île-de-France;75001;Paris
+five;Overflow Depot;Spain;Madrid;28013;Madrid;Gran Via 20
+6;North Storage;UK;England;NW1 6XE;London;1 Baker St
+7;EmptyName;;Italy;Lombardy;20121;Milan;Via Roma 2
+8;QuotedId;"8";Sweden;Stockholm;11122;Stockholm;Sveavägen 10
+9;DupId;Belgium;Flanders;1000;Brussels;Rue de la Loi 16
+9;Duplicate;Belgium;Flanders;1000;Brussels;Rue de la Loi 16
+10;LongField;Germany;Bavaria;80331;Munich;""
+12;EscapedQuotes;Netherlands;North;1011;Amsterdam;"He said ""hello"" today"
+13;NewlineInField;France;Occitanie;34000;Montpellier;"Line1
+Line2"
