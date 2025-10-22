@@ -16,14 +16,21 @@ namespace RaktarAppBackend.Controllers
         public IActionResult GetItems()
         {
             var items = _dbContext.Warehouses.ToList();
-
+            
             return new OkObjectResult(new { items });
+        }
+
+        [HttpGet("{itemId}")]
+        public IActionResult GetItemById(int itemId)
+        {
+            var item = _dbContext.Warehouses.FirstOrDefault(i => i.Id == itemId);
+            return new OkObjectResult(new { item });
         }
 
         [HttpGet("count")]
         public IActionResult GetItemCount()
         {
-            var count = _dbContext.Database.SqlQueryRaw<string>("SELECT * FROM Warehouses").Count();
+            var count = _dbContext.Warehouses.Count();
 
             return new OkObjectResult(new { count });
         }

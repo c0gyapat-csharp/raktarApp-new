@@ -32,11 +32,11 @@ using (var scope = app.Services.CreateAsyncScope())
             City TEXT NOT NULL,
             Address TEXT NOT NULL
         );
-
-        INSERT INTO Warehouses (Name, Country, Region, PostCode, City, Address)
-        VALUES ('Main Warehouse', 'USA', 'California', 90001, 'Los Angeles', '123 Main St')
     ");
 }
+//        INSERT INTO Warehouses (Name, Country, Region, PostCode, City, Address)
+//      VALUES('Main Warehouse', 'USA', 'California', 90001, 'Los Angeles', '123 Main St')
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
