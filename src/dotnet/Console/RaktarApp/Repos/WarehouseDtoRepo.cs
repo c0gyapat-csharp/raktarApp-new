@@ -53,7 +53,7 @@ namespace RaktarApp.Repos
             }
         }
 
-        public void UploadToDB()
+        public void SyncToDB()
         {
             HttpClient client = new HttpClient();
 

@@ -43,7 +43,7 @@ namespace RaktarAppBackend.Controllers
             return new OkResult();
         }
 
-        [HttpPost("bulk")]
+        [HttpPost("sync")]
         public IActionResult AddBulk([FromBody] List<Warehouse> items)
         {
             if (items == null || !items.Any())
