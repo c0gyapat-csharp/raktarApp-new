@@ -52,7 +52,10 @@ namespace RaktarApp.Repos
                 throw new ArgumentException($"Invalid WarehouseDto data: {ex.Message}");
             }
         }
-
+        /// <summary>
+        ///    Syncs the validated WarehouseDto records to the database via an HTTP POST request.
+        ///    Deletes all existing records in the database before inserting the new ones.
+        /// </summary>
         public void SyncToDB()
         {
             HttpClient client = new HttpClient();
