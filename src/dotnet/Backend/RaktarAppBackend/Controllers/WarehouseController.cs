@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RaktarAppBackend.Context;
+using RaktarAppShared.Models;
 
 
 namespace RaktarAppBackend.Controllers
@@ -39,6 +41,19 @@ namespace RaktarAppBackend.Controllers
         public IActionResult AddItem()
         {
             return new OkResult();
+        }
+
+        [HttpPost("bulk")]
+        public IActionResult AddBulk([FromBody] List<Warehouse> items)
+        {
+            if (items == null || !items.Any())
+                return new BadRequestObjectResult(new { error = "Request body must be a JSON array of Warehouse objects." });
+
+            _dbContext.Warehouses.RemoveRange(_dbContext.Warehouses);
+            _dbContext.Warehouses.AddRange(items);
+            _dbContext.SaveChanges();
+
+            return new OkObjectResult(new { added = items.Count });
         }
 
         [HttpPut]

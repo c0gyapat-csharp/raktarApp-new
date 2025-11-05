@@ -42,4 +42,6 @@ dtoRepo.Warehouses.ForEach(warehouseDto =>
     warehouseRepo.AddDtoWarehouse(warehouseDto);
 });
 
+dtoRepo.UploadToDB();
+
 Console.WriteLine("Sikeresen validált rekordok száma: " + dtoRepo.Warehouses.Count);

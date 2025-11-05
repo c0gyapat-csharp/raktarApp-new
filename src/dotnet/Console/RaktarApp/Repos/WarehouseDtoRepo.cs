@@ -52,5 +52,18 @@ namespace RaktarApp.Repos
                 throw new ArgumentException($"Invalid WarehouseDto data: {ex.Message}");
             }
         }
+
+        public void UploadToDB()
+        {
+            HttpClient client = new HttpClient();
+
+            var warehousesJson = System.Text.Json.JsonSerializer.Serialize(_warehouses);
+
+            var content = new StringContent(warehousesJson, Encoding.UTF8, "application/json");
+
+            var response = client.PostAsync("https://localhost:7019/Warehouse/bulk", content).Result;
+
+            Console.WriteLine(response);
+        }
     }
 }

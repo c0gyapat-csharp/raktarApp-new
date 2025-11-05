@@ -35,5 +35,6 @@ namespace RaktarApp.Models
             _city = city;
             _address = address;
         }
+
     }
 }
