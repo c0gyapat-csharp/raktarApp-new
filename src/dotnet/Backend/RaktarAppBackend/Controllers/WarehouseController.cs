@@ -67,14 +67,25 @@ namespace RaktarAppBackend.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateItem()
+        public IActionResult UpdateItem([FromBody] Warehouse warehouse)
         {
-            return new OkResult();
+            if (warehouse == null)
+            {
+                return new BadRequestObjectResult(new { error = "Request body must be a valid Warehouse object." });
+            }
+
+            _dbContext.Warehouses.Update(warehouse);
+            _dbContext.SaveChanges();
+
+            return new OkObjectResult(warehouse);
         }
 
-        [HttpDelete("{itemId}")]
-        public IActionResult DeleteItem(int itemId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteItem(int id)
         {
+            var result = _dbContext.Warehouses.Remove(new Warehouse { Id = id });
+            _dbContext.SaveChangesAsync();
+
             return new OkResult();
         }
     }
