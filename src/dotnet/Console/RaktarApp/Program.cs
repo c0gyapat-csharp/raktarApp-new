@@ -42,6 +42,14 @@ dtoRepo.Warehouses.ForEach(warehouseDto =>
     warehouseRepo.AddDtoWarehouse(warehouseDto);
 });
 
-dtoRepo.SyncToDB();
-
 Console.WriteLine("Sikeresen validált rekordok száma: " + dtoRepo.Warehouses.Count);
+
+try
+{
+    dtoRepo.SyncToDB();
+    Console.WriteLine("Adatok sikeresen szinkronizálva az adatbázissal.");
+} catch (Exception ex)
+{
+    Console.WriteLine("Hiba az adatok adatbázisba történő szinkronizálásakor: " + ex.Message);
+    return;
+}
