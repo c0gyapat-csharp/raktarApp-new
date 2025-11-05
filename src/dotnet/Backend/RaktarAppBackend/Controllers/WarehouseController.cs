@@ -38,9 +38,19 @@ namespace RaktarAppBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem()
+        public IActionResult AddItem([FromBody] Warehouse warehouse)
         {
-            return new OkResult();
+            if(warehouse  == null)
+            {
+                return new BadRequestObjectResult(new { error = "Request body must be a valid Warehouse object." }); 
+            }
+
+            warehouse.Id = _dbContext.Warehouses.OrderBy(w => w.Id).Last().Id + 1;
+
+            _dbContext.Warehouses.Add(warehouse);
+            _dbContext.SaveChanges();
+
+            return new OkObjectResult(warehouse);
         }
 
         [HttpPost("sync")]
