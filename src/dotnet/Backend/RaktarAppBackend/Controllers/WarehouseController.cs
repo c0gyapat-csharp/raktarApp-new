@@ -19,7 +19,7 @@ namespace RaktarAppBackend.Controllers
         {
             var items = _dbContext.Warehouses.ToList();
             
-            return new OkObjectResult(new { items });
+            return new OkObjectResult(items);
         }
 
         [HttpGet("{itemId}")]
