@@ -53,6 +53,16 @@
 
         <!-- Right content: loads WarehouseView for selected warehouse -->
         <Border Grid.Column="1" Padding="12">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedWarehouse}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
             <ContentControl Content="{Binding SelectedWarehouse}" >
                 <ContentControl.ContentTemplate>
                     <DataTemplate>
