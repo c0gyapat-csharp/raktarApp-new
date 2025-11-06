@@ -27,9 +27,6 @@ namespace Desktop.ViewModels
         public MainWindowViewModel()
         {
             _ = LoadWarehousesAsync();
-
-            // Select first by default:
-            SelectedWarehouse = Warehouses.Count > 0 ? Warehouses[0] : null;
         }
 
         private async Task LoadWarehousesAsync()
