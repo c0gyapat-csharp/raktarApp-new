@@ -39,11 +39,7 @@ namespace Desktop.ViewModels
 
                 if (warehouses != null)
                 {
-                    Warehouses.Clear();
-                    foreach (var warehouse in warehouses)
-                    {
-                        Warehouses.Add(warehouse);
-                    }
+                    Warehouses = new ObservableCollection<Warehouse>(warehouses);
                 }
 
             }
