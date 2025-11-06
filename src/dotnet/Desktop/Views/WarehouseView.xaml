@@ -9,6 +9,10 @@
         <StackPanel>
             <TextBlock Text="{Binding Name}" FontSize="18" Foreground="White" FontWeight="Bold"/>
             <TextBlock FontSize="12" Foreground="Gray" Text="{Binding FullAddress}"></TextBlock>
+
+            <Button Content="Delete"
+                    Command="{Binding DataContext.DeleteWarehouseCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding}" />
         </StackPanel>
     </Grid>
 </UserControl>

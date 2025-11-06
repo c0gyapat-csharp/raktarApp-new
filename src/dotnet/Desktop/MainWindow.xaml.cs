@@ -22,6 +22,7 @@ namespace Desktop
             InitializeComponent();
 
             DataContext = new MainWindowViewModel();
+
         }
     }
 }
