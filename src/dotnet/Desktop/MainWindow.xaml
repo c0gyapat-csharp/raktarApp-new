@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:Desktop.Views" xmlns:viewmodels="clr-namespace:Desktop.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="RaktárApp" Height="600" Width="1000">
+        Title="RaktárApp" Height="600" Width="1000" Background="#1e1e1e">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240"/>
@@ -13,30 +13,47 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left vertical menu -->
-        <Border Grid.Column="0" Background="#121212" Padding="8">
-            <StackPanel Background="#121212">
-                <TextBlock Text="Warehouses" FontSize="16" FontWeight="Bold" Margin="4" Foreground="White"/>
-                <ListBox ItemsSource="{Binding Warehouses}"
+        <Grid Background="#121212">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Warehouses" FontSize="16" FontWeight="Bold" Margin="4" Foreground="White"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding Warehouses}"
                          SelectedItem="{Binding SelectedWarehouse, Mode=TwoWay}"
                          HorizontalContentAlignment="Stretch"
-                         BorderThickness="0">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="8" Margin="2" Background="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Converter={x:Null}}">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding City}" FontSize="12" Foreground="Gray"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </Border>
+                         BorderThickness="0"
+                         Background="#1e1e1e"
+                         >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Background="#1e1e1e">
+                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock FontSize="12" Foreground="Gray">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="Country"/>
+                                        <Binding Path="Region"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock FontSize="12" Foreground="Gray">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}">
+                                        <Binding Path="City"/>
+                                        <Binding Path="Address"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
 
         <!-- Right content: loads WarehouseView for selected warehouse -->
         <Border Grid.Column="1" Padding="12">
-            <ContentControl Content="{Binding SelectedWarehouse}">
+            <ContentControl Content="{Binding SelectedWarehouse}" >
                 <ContentControl.ContentTemplate>
                     <DataTemplate>
                         <views:WarehouseView DataContext="{Binding}"/>
