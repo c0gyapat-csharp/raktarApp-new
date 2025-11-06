@@ -26,7 +26,7 @@ namespace RaktarAppBackend.Controllers
         public IActionResult GetItemById(int itemId)
         {
             var item = _dbContext.Warehouses.FirstOrDefault(i => i.Id == itemId);
-            return new OkObjectResult(new { item });
+            return new OkObjectResult(item);
         }
 
         [HttpGet("count")]
