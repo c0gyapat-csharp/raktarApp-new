@@ -11,7 +11,6 @@ namespace RaktarAppBackend.Controllers
     [Route("[controller]")]
     public class WarehouseController
     {
-
         AppSqliteDbContext _dbContext = new AppSqliteDbContext();
 
         [HttpGet]

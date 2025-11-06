@@ -19,6 +19,8 @@ namespace RaktarAppBackend.Context
         {
         }
 
+
        public DbSet<Warehouse> Warehouses { get; set; }
+       public DbSet<WarehouseItem> WarehouseItems { get; set; }
     }
 }

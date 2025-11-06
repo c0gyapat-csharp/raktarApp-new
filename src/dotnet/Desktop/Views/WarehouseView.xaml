@@ -8,17 +8,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="{Binding Name}" FontSize="18" Foreground="White" FontWeight="Bold"/>
-            <TextBlock FontSize="12" Foreground="Gray">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{}{0} {1} {2} {3} {4}">
-                        <Binding Path="Country"/>
-                        <Binding Path="Region"/>
-                        <Binding Path="PostCode"/>
-                        <Binding Path="City"/>
-                        <Binding Path="Address"/>
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
+            <TextBlock FontSize="12" Foreground="Gray" Text="{Binding FullAddress}"></TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
