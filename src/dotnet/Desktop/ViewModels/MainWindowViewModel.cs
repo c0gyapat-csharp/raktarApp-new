@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Net.Http.Json;
 using RaktarAppShared.Models;
 namespace Desktop.ViewModels
 {
@@ -20,13 +22,37 @@ namespace Desktop.ViewModels
 
         public MainWindowViewModel()
         {
-            // Sample data — replace this with an API call to your backend:
-            Warehouses.Add(new Warehouse { Id = 1, Name = "Central", Country = "HU", Region = "Közép", PostCode = 1000, City = "Budapest", Address = "Main st 1" });
-            Warehouses.Add(new Warehouse { Id = 2, Name = "Warehouse B", Country = "HU", Region = "Nyugat", PostCode = 2000, City = "Győr", Address = "Second st 2" });
-            Warehouses.Add(new Warehouse { Id = 3, Name = "Depot", Country = "HU", Region = "Dél", PostCode = 3000, City = "Pécs", Address = "Depot rd 3" });
+            _ = LoadWarehousesAsync();
 
             // Select first by default:
             SelectedWarehouse = Warehouses.Count > 0 ? Warehouses[0] : null;
         }
+
+        private async Task LoadWarehousesAsync()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var response = await client.GetAsync("https://localhost:7019/Warehouse");
+                response.EnsureSuccessStatusCode();
+                var warehouses = await response.Content.ReadFromJsonAsync<List<Warehouse>>();
+
+                if (warehouses != null)
+                {
+                    Warehouses.Clear();
+                    foreach (var warehouse in warehouses)
+                    {
+                        Warehouses.Add(warehouse);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log/handle error appropriately (Debug.WriteLine, logger, message to user, etc.)
+                System.Diagnostics.Debug.WriteLine($"Failed to load warehouses: {ex}");
+            }
+        }
     }
+        
 }
