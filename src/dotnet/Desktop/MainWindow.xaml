@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Desktop"
+        xmlns:views="clr-namespace:Desktop.Views" xmlns:viewmodels="clr-namespace:Desktop.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="RaktárApp" Height="600" Width="1000">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- Left vertical menu -->
+        <Border Grid.Column="0" Background="#121212" Padding="8">
+            <StackPanel Background="#121212">
+                <TextBlock Text="Warehouses" FontSize="16" FontWeight="Bold" Margin="4" Foreground="White"/>
+                <ListBox ItemsSource="{Binding Warehouses}"
+                         SelectedItem="{Binding SelectedWarehouse, Mode=TwoWay}"
+                         HorizontalContentAlignment="Stretch"
+                         BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="8" Margin="2" Background="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}, Converter={x:Null}}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                    <TextBlock Text="{Binding City}" FontSize="12" Foreground="Gray"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Border>
+
+        <!-- Right content: loads WarehouseView for selected warehouse -->
+        <Border Grid.Column="1" Padding="12">
+            <ContentControl Content="{Binding SelectedWarehouse}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate>
+                        <views:WarehouseView DataContext="{Binding}"/>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Border>
     </Grid>
 </Window>
