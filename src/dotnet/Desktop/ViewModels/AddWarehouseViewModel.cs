@@ -50,7 +50,8 @@ namespace Desktop.ViewModels
                 Country = this.Country,
                 Region = this.Region,
                 City = this.City,
-                Address = this.Address
+                Address = this.Address,
+                Items = []
             };
 
             try
