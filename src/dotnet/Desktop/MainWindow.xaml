@@ -3,9 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:Desktop.Views" xmlns:viewmodels="clr-namespace:Desktop.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+        xmlns:views="clr-namespace:Desktop.Views" 
+        xmlns:viewmodels="clr-namespace:Desktop.ViewModels" 
+        xmlns:models="clr-namespace:RaktarAppShared.Models;assembly=RaktarAppShared"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="RaktárApp" Height="600" Width="1000" Background="#1e1e1e">
+    <Window.Resources>
+        <!-- This template will be used whenever CurrentView holds a Warehouse object -->
+        <DataTemplate DataType="{x:Type models:Warehouse}">
+            <views:WarehouseView/>
+        </DataTemplate>
+        <!-- This template will be used whenever CurrentView holds an AddWarehouseViewModel object -->
+        <DataTemplate DataType="{x:Type viewmodels:AddWarehouseViewModel}">
+            <views:AddWarehouseView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EditWarehouseViewModel}">
+            <views:EditWarehouseView/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240"/>
@@ -13,25 +29,22 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Warehouses" FontSize="16" FontWeight="Bold" Margin="4" Foreground="White" Background="#121212"/>
+        <Button Grid.Row="1" Content=" + New warehouse" Background="#121212" Foreground="White" Command="{Binding ShowAddWarehouseViewCommand}"></Button>
         <!-- Left vertical menu -->
-        <Grid Background="#121212" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <ListBox Grid.Row="1" ItemsSource="{Binding Warehouses}"
+        <Grid Background="#121212" Grid.Row="2">
+            <ListBox ItemsSource="{Binding Warehouses}" 
                          SelectedItem="{Binding SelectedWarehouse, Mode=TwoWay}"
                          HorizontalContentAlignment="Stretch"
                          BorderThickness="0"
-                         Background="#1e1e1e"
-                         >
+                         Background="#1e1e1e">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Background="#1e1e1e">
-                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="White"/>
+                            <TextBlock  Text="{Binding Name}" FontWeight="SemiBold" Foreground="White"/>
                             <TextBlock FontSize="12" Foreground="Gray">
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0} {1}">
@@ -54,25 +67,9 @@
             </ListBox>
         </Grid>
 
-        <!-- Right content: loads WarehouseView for selected warehouse -->       
-        <Border Grid.Column="1" Grid.RowSpan="2" Padding="12">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Visibility" Value="Visible" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding SelectedWarehouse}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-            <ContentControl Content="{Binding SelectedWarehouse}" >
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <views:WarehouseView DataContext="{Binding}"/>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
+        <!-- Right content: loads view based on the type of object in CurrentView -->
+        <Border Grid.Column="1" Grid.RowSpan="3" Padding="12">
+            <ContentControl Content="{Binding CurrentView}" />
         </Border>
 
     </Grid>

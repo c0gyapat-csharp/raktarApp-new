@@ -1,6 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
+    <Page Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Shared\RaktarAppShared\RaktarAppShared.csproj" />
   </ItemGroup>
 

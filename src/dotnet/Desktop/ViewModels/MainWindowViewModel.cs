@@ -1,9 +1,11 @@
-﻿using RaktarAppShared.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Desktop.Views;
+using RaktarAppShared.Models;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
-using CommunityToolkit.Mvvm.Input;
 
 namespace Desktop.ViewModels
 {
@@ -18,10 +20,23 @@ namespace Desktop.ViewModels
         HttpClient _client = new HttpClient();
 
         private Warehouse? _selectedWarehouse;
+
+        private object _currentView;
+
+        public object CurrentView
+        {
+            get => _currentView;
+            set => SetProperty(ref _currentView, value);
+         } 
+
         public Warehouse? SelectedWarehouse
         {
             get => _selectedWarehouse;
-            set => SetProperty(ref _selectedWarehouse, value);
+            set
+            {
+                SetProperty(ref _selectedWarehouse, value);
+                CurrentView = value;
+            }
         }
 
         public MainWindowViewModel()
@@ -75,6 +90,36 @@ namespace Desktop.ViewModels
             {
                 MessageBox.Show($"Error deleting warehouse: {ex.Message}");
             }
+        }
+
+        [RelayCommand]
+        private void ShowEditWarehouseView()
+        {
+            CurrentView = new EditWarehouseViewModel(
+                SelectedWarehouse!,
+                async () => {
+                    await LoadWarehousesAsync();
+                    CurrentView = this;
+                },
+                () => {
+                    CurrentView = this;
+                }
+            );
+        }
+
+
+        [RelayCommand]
+        private void ShowAddWarehouseView()
+        {
+            CurrentView = new AddWarehouseViewModel(
+                async () => {
+                    await LoadWarehousesAsync();
+                    CurrentView = this;
+                },
+                () => {
+                    CurrentView = this;
+                }
+            );
         }
     }
     
