@@ -21,6 +21,9 @@ namespace Desktop.ViewModels
         private string _region;
 
         [ObservableProperty]
+        private string _postCode;
+
+        [ObservableProperty]
         private string _city;
 
         [ObservableProperty]
@@ -49,6 +52,7 @@ namespace Desktop.ViewModels
                 Name = this.Name,
                 Country = this.Country,
                 Region = this.Region,
+                PostCode = Convert.ToInt32(this.PostCode),
                 City = this.City,
                 Address = this.Address,
                 Items = []

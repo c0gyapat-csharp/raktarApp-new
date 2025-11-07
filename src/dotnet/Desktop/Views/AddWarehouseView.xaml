@@ -20,6 +20,9 @@
                      Text="{Binding Region, Mode=TwoWay}" 
                      />
             <TextBox Width="300"
+                     Text="{Binding PostCode, Mode=TwoWay}" 
+                     />
+            <TextBox Width="300"
                      Text="{Binding City, Mode=TwoWay}" 
                      />
             <TextBox Width="300"

@@ -99,10 +99,10 @@ namespace Desktop.ViewModels
                 SelectedWarehouse!,
                 async () => {
                     await LoadWarehousesAsync();
-                    CurrentView = this;
+                    CurrentView = SelectedWarehouse;
                 },
                 () => {
-                    CurrentView = this;
+                    CurrentView = SelectedWarehouse;
                 }
             );
         }
